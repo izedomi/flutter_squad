@@ -1,15 +1,15 @@
 ## Android
 <p float="left">
   <img src="https://raw.githubusercontent.com/izedomi/flutter_squad/main/example/screenshots/android1.png" width="250">
-  <img src="https://raw.githubusercontent.com/izedomi/flutter_squad/example/main/screenshots/android2.png" width="250">
-  <img src="https://raw.githubusercontent.com/izedomi/flutter_squad/example/main/screenshots/android3.png" width="250">
+  <img src="https://raw.githubusercontent.com/izedomi/flutter_squad/main/example/screenshots/android2.png" width="250">
+  <img src="https://raw.githubusercontent.com/izedomi/flutter_squad/main/example/screenshots/android3.png" width="250">
 </p>
 
 ## IOS
 <p float="left">
-  <img src="https://raw.githubusercontent.com/izedomi/flutter-monnify/main/example/screenshots/ios1.png" width="250">
-  <img src="https://raw.githubusercontent.com/izedomi/flutter-monnify/main/example/screenshots/ios2.png" width="250">
-  <img src="https://raw.githubusercontent.com/izedomi/flutter-monnify/main/example/screenshots/ios3.png" width="250">
+  <img src="https://raw.githubusercontent.com/izedomi/flutter_squad/main/example/screenshots/ios1.png" width="250">
+  <img src="https://raw.githubusercontent.com/izedomi/flutter_squad/main/example/screenshots/ios2.png" width="250">
+  <img src="https://raw.githubusercontent.com/izedomi/flutter_squad/main/example/screenshots/ios3.png" width="250">
 </p>
 
 ## Flutter Squad Package
@@ -23,7 +23,7 @@ To use this package, add `flutter_squad` as a [dependency in your pubspec.yaml f
 ``` dart
 import 'package:flutter_squad/flutter_squad.dart';
 
-SquadTransactionResponse? response = await Squad.checkout(context, charge(), isSandbox: true);
+SquadTransactionResponse? response = await Squad.checkout(context, charge(), sandbox: true);
 
  Charge charge() {
     return Charge(
@@ -45,8 +45,6 @@ No other configuration required&mdash;the plugin works out of the box.
 
 ## Parameters
 To initialize a transaction, you need to pass details such as email, first name, last name, amount, transaction reference, etc to the Squad.checkout() method. The Email, amount, and currency are required. You can also pass any other additional information in the metadata field.
-
-To Customize the appbar to suit your project's theme color use the `AppConfig` object on the Squad.checkout() method.
 
 ## Example
 ``` dart
@@ -94,9 +92,8 @@ class _SquadExampleState extends State<SquadExample> {
               child: const Text("Pay With Squad"),
               onPressed: () async {
                 SquadTransactionResponse? response =
-                    await Squad().checkout(context, charge(), isSandbox: true);
-                print(
-                    "Squad transaction completed======>${response?.toJson().toString()}");
+                    await Squad().checkout(context, charge(), sandbox: true);
+                
               },
             ),
           ],
@@ -144,9 +141,9 @@ The `Squad.checkout()` method returns a `SquadTransactionResponse` object for a 
 
 The transaction is successful if `status` is `200` or `202`. 200 represents a `verified` successful transaction. 202 represents an `unverified` successful transaction.
 
-More on verifying a transaction, [see docs](https://squadinc.gitbook.io/squad/payments/accept-payments-1)
+More on verifying a transaction, [see docs here](https://squadinc.gitbook.io/squad/payments/accept-payments-1)
 
-For a verified successful transaction (i.e status is 200) the data property on the SquadTransactionResponse contains a Data object with the transaction details:
+For a `verified` successful transaction (i.e status is 200) the data property on the SquadTransactionResponse contains a Data object with the transaction details:
 
 ``` dart
   int? transactionAmount;
@@ -164,12 +161,35 @@ For a verified successful transaction (i.e status is 200) the data property on t
 
 ```
 
-For an unverified successful transaction (i.e status is 202) the data property on the SquadTransactionResponse is null
+For an `unverified` successful transaction (i.e status is 202) the data property on the SquadTransactionResponse is null
 
-It is recommended to verify the transaction status with the backend before providing value. By default, the package does not verify your transactions. To allow the `flutter_squad` package verify your transaction after successful payment, add the `secretKey` to the charge object.
+It is recommended to verify the transaction status with the backend before providing value. By default, the package does not verify your transactions. To allow the `flutter_squad` package verify your transaction after successful payment, add the `transactionRef` and `secretKey` to the charge object.
 
 
-For a failed transaction, the `Squad.checkout()` method returns null.
+For a `failed` transaction, the `Squad.checkout()` method returns null.
+
+
+## Customizations
+To Customize the appbar to suit your project's theme color use the `appbar` argument on Squad.checkout(). 
+
+```Dart
+
+await Squad.checkout(
+    context, charge(),
+    sandbox: true,
+    appBar: AppBarConfig(
+        color: Colors.green,
+        leadingIcon: const Icon(Icons.close)));
+```
+
+If you prefer to use without the appbar, set `showAppbar` argumment to `false`
+
+```Dart
+ await Squad.checkout(
+    context, charge(),
+    sandbox: true,
+    showAppbar: false,
+ );
 
 ## Contributing, Issues and Bug Reports
 
