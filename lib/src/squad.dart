@@ -1,16 +1,13 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_squad/src/squad_webview.dart';
-
 import '../flutter_squad.dart';
-import 'model/charge.dart';
-import 'model/config.dart';
 
 class Squad {
-  Future<SquadTransactionResponse?> checkout(
+  static Future<SquadTransactionResponse?> checkout(
     BuildContext context,
     Charge payload, {
     bool displayToast = true,
-    bool isSandbox = true,
+    bool sandbox = true,
+    bool showAppbar = true,
     ToastConfig? toast,
     AppBarConfig? appBar,
   }) async {
@@ -19,6 +16,11 @@ class Squad {
       MaterialPageRoute(
           builder: (context) => SquadWebview(
                 payload,
+                sandbox: sandbox,
+                displayToast: displayToast,
+                toast: toast,
+                showAppbar: showAppbar,
+                appBar: appBar,
               )),
     );
     return transactionResponse;

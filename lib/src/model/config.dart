@@ -42,5 +42,5 @@ class AppBarConfig {
   ///AppBar leadingIcon
   Widget? leadingIcon;
 
-  AppBarConfig({this.title = "Monnify", this.color, this.leadingIcon});
+  AppBarConfig({this.title = "Squad", this.color, this.leadingIcon});
 }

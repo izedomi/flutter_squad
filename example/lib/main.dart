@@ -1,5 +1,4 @@
 import 'dart:math';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_squad/flutter_squad.dart';
 
@@ -41,8 +40,13 @@ class _SquadExampleState extends State<SquadExample> {
             TextButton(
               child: const Text("Pay With Squad"),
               onPressed: () async {
-                SquadTransactionResponse? response =
-                    await Squad().checkout(context, charge());
+                SquadTransactionResponse? response = await Squad.checkout(
+                    context, charge(),
+                    sandbox: true,
+                    showAppbar: false,
+                    appBar: AppBarConfig(
+                        color: Colors.green,
+                        leadingIcon: const Icon(Icons.close)));
                 print(
                     "Squad transaction completed======>${response?.toJson().toString()}");
               },
@@ -56,10 +60,8 @@ class _SquadExampleState extends State<SquadExample> {
   Charge charge() {
     return Charge(
         amount: 10000,
-        publicKey:
-            "sandbox_pk_a7ce8374b818a8e2b67444440027f256b7d53ec0645dc7a3b",
-        secretKey:
-            "sandbox_sk_a7ce8374b818a8e2b67444440127f5f6f7133f30a25a50d3d",
+        publicKey: "sandbox_pk_a7ce8374b818a8e2b670027f256b7d53ec0645dc7a3b",
+        secretKey: "sandbox_sk_a7ce8374b818a8e2b670127f5f6f7133f30a25a50d3d",
         email: "emma@yopmail.com",
         currencyCode: "NGN",
         transactionRef: "SQUAD-PYM-${generateRandomString(10)}",

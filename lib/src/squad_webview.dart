@@ -7,8 +7,6 @@ import 'package:flutter_squad/src/utils/utils.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:webview_flutter_plus/webview_flutter_plus.dart';
 import '../flutter_squad.dart';
-import 'model/charge.dart';
-import 'model/config.dart';
 import 'model/env.dart';
 
 class SquadWebview extends StatefulWidget {
@@ -18,8 +16,11 @@ class SquadWebview extends StatefulWidget {
   ///display toast to user based on the various state
   final bool displayToast;
 
-  ///display toast to user based on the various state
-  final bool isSandbox;
+  ///dev environment
+  final bool sandbox;
+
+  ///dev environment
+  final bool showAppbar;
 
   /// Customize how toast is displayed
   final ToastConfig? toast;
@@ -30,7 +31,8 @@ class SquadWebview extends StatefulWidget {
   const SquadWebview(this.charge,
       {Key? key,
       this.displayToast = true,
-      this.isSandbox = true,
+      this.sandbox = true,
+      this.showAppbar = true,
       this.toast,
       this.appBar})
       : super(key: key);
@@ -46,7 +48,7 @@ class _SquadWebviewState extends State<SquadWebview>
   double loadProgress = 0;
   late Map<String, dynamic> payload;
   String url = 'https://squad-web-two.vercel.app';
-  bool isVerifyingTransaction = false;
+  bool verifyingTransaction = false;
   bool sdkReturnedSuccess = false;
 
   @override
@@ -59,46 +61,50 @@ class _SquadWebviewState extends State<SquadWebview>
   @override
   Widget build(BuildContext context) {
     return BusyOverlay(
-      show: isVerifyingTransaction,
+      show: verifyingTransaction,
       child: Scaffold(
-        appBar: AppBar(
-          title: Text(widget.appBar?.title ?? "Squad"),
-          elevation: 0,
-          // backgroundColor: Colors.yellow,
-          leading: widget.appBar?.leadingIcon ??
-              IconButton(
-                onPressed: () {
-                  Navigator.pop(context);
-                },
-                icon: const Icon(
-                  Icons.chevron_left,
-                  // color: baseBlack,
-                ),
-              ),
-          actions: [
-            IconButton(
-              onPressed: () {
-                _controller.loadUrl(url);
-              },
-              icon: const Icon(Icons.refresh
-                  // color: baseBlack,
+        appBar: widget.showAppbar
+            ? AppBar(
+                title: Text(widget.appBar?.title ?? "Squad"),
+                elevation: 0,
+                backgroundColor: widget.appBar?.color,
+                leading: widget.appBar?.leadingIcon ??
+                    IconButton(
+                      onPressed: () {
+                        Navigator.pop(context);
+                      },
+                      icon: const Icon(
+                        Icons.chevron_left,
+                        // color: baseBlack,
+                      ),
+                    ),
+                actions: [
+                  IconButton(
+                    onPressed: () {
+                      _controller.loadUrl(url);
+                    },
+                    icon: const Icon(Icons.refresh
+                        // color: baseBlack,
+                        ),
                   ),
-            ),
-          ],
+                ],
+              )
+            : null,
+        body: SafeArea(
+          child: SizedBox(
+              width: deviceWidth(context),
+              height: deviceHeight(context),
+              child: Column(
+                children: [
+                  loadProgress < 1.0
+                      ? Expanded(
+                          flex: loadProgress < 1.0 ? 10 : 0,
+                          child: _loadingView())
+                      : Container(),
+                  Expanded(flex: 1, child: _mainView()),
+                ],
+              )),
         ),
-        body: SizedBox(
-            width: deviceWidth(context),
-            height: deviceHeight(context),
-            child: Column(
-              children: [
-                loadProgress < 1.0
-                    ? Expanded(
-                        flex: loadProgress < 1.0 ? 10 : 0,
-                        child: _loadingView())
-                    : Container(),
-                Expanded(flex: 1, child: _mainView()),
-              ],
-            )),
         bottomSheet: _start > 0
             ? Container(
                 width: double.infinity,
@@ -217,13 +223,13 @@ class _SquadWebviewState extends State<SquadWebview>
 
   verifyTransaction(Charge charge) async {
     if (_canVerifyTransaction(charge)) {
-      setState(() => isVerifyingTransaction = true);
+      setState(() => verifyingTransaction = true);
       SquadTransactionResponse response = await ApiService(
               transactionRef: widget.charge.transactionRef!,
               secretKey: widget.charge.secretKey!,
               env: Env.sandbox)
           .verifyTransaction();
-      setState(() => isVerifyingTransaction = false);
+      setState(() => verifyingTransaction = false);
       _leavePaymentPage(response: response);
     }
     _leavePaymentPage(
