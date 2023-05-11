@@ -190,7 +190,7 @@ If you prefer to use without the appbar, set `showAppbar` argumment to `false`
     sandbox: true,
     showAppbar: false,
  );
-
+```
 ## Contributing, Issues and Bug Reports
 
 The project is open to public contribution. Please feel very free to contribute.
