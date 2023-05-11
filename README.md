@@ -163,7 +163,7 @@ For a `verified` successful transaction (i.e status is 200) the data property on
 
 For an `unverified` successful transaction (i.e status is 202) the data property on the SquadTransactionResponse is null
 
-It is recommended to verify the transaction status with the backend before providing value. By default, the package does not verify your transactions. To allow the `flutter_squad` package verify your transaction after successful payment, add the `transactionRef` and `secretKey` to the charge object.
+It is recommended to verify the transaction status with the backend before providing value. By default, the package does not verify your transactions. To allow the `flutter_squad` package verify your transaction after successful payment, provide the `transactionRef` and `secretKey` to the charge object.
 
 
 For a `failed` transaction, the `Squad.checkout()` method returns null.
