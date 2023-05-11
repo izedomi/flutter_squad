@@ -47,8 +47,8 @@ class _SquadExampleState extends State<SquadExample> {
                     appBar: AppBarConfig(
                         color: Colors.green,
                         leadingIcon: const Icon(Icons.close)));
-                print(
-                    "Squad transaction completed======>${response?.toJson().toString()}");
+                //   print(
+                //       "Squad transaction completed======>${response?.toJson().toString()}");
               },
             ),
           ],
