@@ -1,4 +1,16 @@
+## Android
+<p float="left">
+  <img src="https://raw.githubusercontent.com/izedomi/flutter_squad/main/example/screenshots/android1.png" width="250">
+  <img src="https://raw.githubusercontent.com/izedomi/flutter_squad/example/main/screenshots/android2.png" width="250">
+  <img src="https://raw.githubusercontent.com/izedomi/flutter_squad/example/main/screenshots/android3.png" width="250">
+</p>
 
+## IOS
+<p float="left">
+  <img src="https://raw.githubusercontent.com/izedomi/flutter-monnify/main/example/screenshots/ios1.png" width="250">
+  <img src="https://raw.githubusercontent.com/izedomi/flutter-monnify/main/example/screenshots/ios2.png" width="250">
+  <img src="https://raw.githubusercontent.com/izedomi/flutter-monnify/main/example/screenshots/ios3.png" width="250">
+</p>
 
 ## Flutter Squad Package
 A Flutter package for making payments via Squad Payment Gateway. Android and iOS supported.
