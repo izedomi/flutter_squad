@@ -60,8 +60,8 @@ class _SquadExampleState extends State<SquadExample> {
   Charge charge() {
     return Charge(
         amount: 10000,
-        publicKey: "sandbox_pk_a7ce8374b818a8e2b670027f256b7d53ec0645dc7a3b",
-        secretKey: "sandbox_sk_a7ce8374b818a8e2b670127f5f6f7133f30a25a50d3d",
+        publicKey: "sandbox_pk_a7ce8374b818a8e2b670027f256b7d53ec0645dc7a3b1",
+        secretKey: "sandbox_sk_a7ce8374b818a8e2b670127f5f6f7133f30a25a50d3d1",
         email: "emma@yopmail.com",
         currencyCode: "NGN",
         transactionRef: "SQUAD-PYM-${generateRandomString(10)}",

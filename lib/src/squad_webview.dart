@@ -13,7 +13,7 @@ class SquadWebview extends StatefulWidget {
   ///Transaction payload
   final Charge charge;
 
-  ///display toast to user based on the various state
+  ///display toast to user based on sdk state
   final bool displayToast;
 
   ///dev environment
@@ -133,7 +133,7 @@ class _SquadWebviewState extends State<SquadWebview>
         controller.loadUrl(url);
       },
       onPageFinished: (String url) async {
-        print('Page finished loading: $url');
+        // print('Page finished loading: $url');
 
         await _controller.webViewController
             .runJavascript('showpaymentModal(${json.encode(payload)})');
@@ -178,7 +178,7 @@ class _SquadWebviewState extends State<SquadWebview>
 
       //return transaction response
       if (response["message"].toLowerCase().contains("success")) {
-        startTimer(10);
+        startTimer(5);
         sdkReturnedSuccess = true;
       } else {
         if (!sdkReturnedSuccess) {

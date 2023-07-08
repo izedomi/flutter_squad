@@ -31,10 +31,6 @@ class DioResponseHandler {
     final dioError = e;
     switch (dioError.type) {
       case DioErrorType.badResponse:
-        if (kDebugMode) {
-          print("error response: ${dioError.response?.statusCode}");
-          print("error response: ${dioError.response?.data}");
-        }
         return SquadTransactionResponse(
             status: dioError.response?.statusCode ?? 400,
             success: false,

@@ -29,14 +29,6 @@ class BusyOverlay extends StatelessWidget {
               child: Column(
                 mainAxisSize: MainAxisSize.min,
                 children: <Widget>[
-                  // const Loader(radius: 15),
-                  // Center(
-                  //   child: Image.asset(
-                  //     loaderTransparentGIF2,
-                  //     width: 350.w,
-                  //     height: 350.w,
-                  //   ),
-                  // ),
                   const CircularProgressIndicator.adaptive(),
                   Text(title ?? "Verifying transaction...",
                       style: const TextStyle(
